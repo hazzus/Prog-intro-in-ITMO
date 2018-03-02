@@ -4,6 +4,6 @@ import java.util.List;
 
 public class Strikeout extends AbstractElement{
     public Strikeout (List<MDElement> el){
-        super("~", el);
+        super("~","<s>","</s>","\\textst{", el);
     }
 }

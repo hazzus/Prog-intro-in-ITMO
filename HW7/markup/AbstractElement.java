@@ -2,20 +2,42 @@ package markup;
 
 import java.util.List;
 
-public abstract class AbstractElement {
+public abstract class AbstractElement implements MDElement {
     private List<MDElement> el;
-    protected String sur;
+    private String sur;
+    private String htmlSurOpen;
+    private String htmlSurClose;
+    private String texSur;
 
-    public AbstractElement(String s, List<MDElement> e){
-        sur = s;
+    AbstractElement(String MarkDown, String HtmlOpen, String HtmlClose, String TexOpen, List<MDElement> e) {
+        sur = MarkDown;
+        htmlSurOpen = HtmlOpen;
+        htmlSurClose = HtmlClose;
+        texSur = TexOpen;
         el = e;
     }
 
-    public void toMarkdown(StringBuilder s){
+    public void toMarkdown(StringBuilder s) {
         s.append(sur);
-        for (int i = 0; i < el.size(); i++){
-            el.get(i).toMarkdown(s);
+        for (MDElement anEl : el) {
+            anEl.toMarkdown(s);
         }
         s.append(sur);
+    }
+
+    public void toHtml(StringBuilder s) {
+        s.append(htmlSurOpen);
+        for (MDElement anEl : el) {
+            anEl.toHtml(s);
+        }
+        s.append(htmlSurClose);
+    }
+
+    public void toTex(StringBuilder s) {
+        s.append(texSur);
+        for (MDElement anEl : el){
+            anEl.toTex(s);
+        }
+        s.append("}");
     }
 }
